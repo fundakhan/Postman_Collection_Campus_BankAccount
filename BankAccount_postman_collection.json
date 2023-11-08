@@ -1,0 +1,288 @@
+{
+	"info": {
+		"_postman_id": "3bd191df-8ca8-4262-bab9-5439d667b586",
+		"name": "BANK  ACCOUNT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25083256"
+	},
+	"item": [
+		{
+			"name": "Login Function Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code for Log in function is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"turkeyts\",\r\n    \"password\": \"TechnoStudy123\",\r\n    \"rememberMe\": \"true\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://test.mersys.io/auth/login",
+					"protocol": "https",
+					"host": [
+						"test",
+						"mersys",
+						"io"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE Bank Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"var responseBody = pm.response.json();\r",
+							"pm.collectionVariables.set(\"bankAccount_id\", responseBody.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"RBCC\",\r\n  \"iban\": \"999\",\r\n  \"integrationCode\": \"99\",\r\n  \"currency\": \"USD\",\r\n  \"active\": true,\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{CampusURL}}/school-service/api/bank-accounts",
+					"host": [
+						"{{CampusURL}}"
+					],
+					"path": [
+						"school-service",
+						"api",
+						"bank-accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE Bank Account Negative Test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code for Create Country Negative Test is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"RBCC\",\r\n  \"iban\": \"999\",\r\n  \"integrationCode\": \"99\",\r\n  \"currency\": \"USD\",\r\n  \"active\": true,\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{CampusURL}}/school-service/api/bank-accounts",
+					"host": [
+						"{{CampusURL}}"
+					],
+					"path": [
+						"school-service",
+						"api",
+						"bank-accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Bank Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{CampusURL}}/school-service/api/bank-accounts/{{bankAccount_id}}",
+					"host": [
+						"{{CampusURL}}"
+					],
+					"path": [
+						"school-service",
+						"api",
+						"bank-accounts",
+						"{{bankAccount_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE Bank Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{bankAccount_id}}\",\r\n  \"name\": \"{{$randomBankAccountName}}\",\r\n  \"iban\": \"{{$randomBankAccountIban}}\",\r\n  \"integrationCode\": \"{{$randomInt}}\",\r\n  \"currency\": \"USD\",\r\n  \"active\": true,\r\n  \"schoolId\": \"6390f3207a3bcb6a7ac977f9\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{CampusURL}}/school-service/api/bank-accounts",
+					"host": [
+						"{{CampusURL}}"
+					],
+					"path": [
+						"school-service",
+						"api",
+						"bank-accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Bank Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{CampusURL}}/school-service/api/bank-accounts/{{bankAccount_id}}",
+					"host": [
+						"{{CampusURL}}"
+					],
+					"path": [
+						"school-service",
+						"api",
+						"bank-accounts",
+						"{{bankAccount_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET/DELETE Bank Account Negative Test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{CampusURL}}/school-service/api/bank-accounts/{{bankAccount_id}}",
+					"host": [
+						"{{CampusURL}}"
+					],
+					"path": [
+						"school-service",
+						"api",
+						"bank-accounts",
+						"{{bankAccount_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "bankAccount_id",
+			"value": ""
+		},
+		{
+			"key": "state_id",
+			"value": ""
+		}
+	]
+}
